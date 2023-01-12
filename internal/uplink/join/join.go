@@ -106,6 +106,7 @@ func Handle(ctx context.Context, rxPacket models.RXPacket) error {
 			jctx.createDeviceSession,
 			jctx.createDeviceActivation,
 			jctx.setDeviceMode,
+			jctx.storeDeviceGatewayRXInfoSet,
 			jctx.sendJoinAcceptDownlink,
 		} {
 			if err := f(); err != nil {
@@ -650,6 +651,45 @@ func (ctx *joinContext) setPRStartAnsPayload() error {
 		ctx.PRStartAnsPayload.DLMetaData.GWInfo = append(ctx.PRStartAnsPayload.DLMetaData.GWInfo, backend.GWInfoElement{
 			ULToken: gwInfo.ULToken,
 		})
+	}
+
+	return nil
+}
+
+func (ctx *joinContext) storeDeviceGatewayRXInfoSet() error {
+	rxInfoSet := storage.DeviceGatewayRXInfoSet{
+		DevEUI: ctx.DeviceSession.DevEUI,
+		DR:     ctx.RXPacket.DR,
+	}
+	log.WithFields(
+		log.Fields{"dev_eui": rxInfoSet.DevEUI, "ctx_id": ctx.ctx.Value("join_ctx")}).Info(
+		"experimental: running save rxinfo on join")
+
+	if len(ctx.RXPacket.RXInfoSet) <= 0 {
+		log.WithFields(
+			log.Fields{"dev_eui": rxInfoSet.DevEUI, "ctx_id": ctx.ctx.Value("join_ctx")}).Warning(
+			"experimental: not saving empty RXInfoSet")
+		return nil
+	}
+
+	for i := range ctx.RXPacket.RXInfoSet {
+		rxItem := storage.DeviceGatewayRXInfo{
+			GatewayID: helpers.GetGatewayID(ctx.RXPacket.RXInfoSet[i]),
+			RSSI:      int(ctx.RXPacket.RXInfoSet[i].Rssi),
+			LoRaSNR:   ctx.RXPacket.RXInfoSet[i].LoraSnr,
+			Board:     ctx.RXPacket.RXInfoSet[i].Board,
+			Antenna:   ctx.RXPacket.RXInfoSet[i].Antenna,
+			Context:   ctx.RXPacket.RXInfoSet[i].Context,
+		}
+		log.WithFields(
+			log.Fields{"dev_eui": rxInfoSet.DevEUI, "rxItem": rxItem, "ctx_id": ctx.ctx.Value("join_ctx")}).Info(
+			"experimental: join rxinfo saved")
+		rxInfoSet.Items = append(rxInfoSet.Items, rxItem)
+	}
+
+	err := storage.SaveDeviceGatewayRXInfoSet(ctx.ctx, rxInfoSet)
+	if err != nil {
+		return errors.Wrap(err, "save device gateway rx-info set error")
 	}
 
 	return nil
