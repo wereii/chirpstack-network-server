@@ -662,12 +662,12 @@ func (ctx *joinContext) storeDeviceGatewayRXInfoSet() error {
 		DR:     ctx.RXPacket.DR,
 	}
 	log.WithFields(
-		log.Fields{"dev_eui": rxInfoSet.DevEUI, "ctx_id": ctx.ctx.Value("join_ctx")}).Info(
+		log.Fields{"dev_eui": rxInfoSet.DevEUI, "ctx_id": ctx.ctx.Value(logging.ContextIDKey)}).Info(
 		"experimental: running save rxinfo on join")
 
 	if len(ctx.RXPacket.RXInfoSet) <= 0 {
 		log.WithFields(
-			log.Fields{"dev_eui": rxInfoSet.DevEUI, "ctx_id": ctx.ctx.Value("join_ctx")}).Warning(
+			log.Fields{"dev_eui": rxInfoSet.DevEUI, "ctx_id": ctx.ctx.Value(logging.ContextIDKey)}).Warning(
 			"experimental: not saving empty RXInfoSet")
 		return nil
 	}
@@ -682,7 +682,7 @@ func (ctx *joinContext) storeDeviceGatewayRXInfoSet() error {
 			Context:   ctx.RXPacket.RXInfoSet[i].Context,
 		}
 		log.WithFields(
-			log.Fields{"dev_eui": rxInfoSet.DevEUI, "rxItem": rxItem, "ctx_id": ctx.ctx.Value("join_ctx")}).Info(
+			log.Fields{"dev_eui": rxInfoSet.DevEUI, "rxItem": rxItem, "ctx_id": ctx.ctx.Value(logging.ContextIDKey)}).Info(
 			"experimental: join rxinfo saved")
 		rxInfoSet.Items = append(rxInfoSet.Items, rxItem)
 	}
