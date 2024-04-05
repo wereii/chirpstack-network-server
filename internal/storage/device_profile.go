@@ -42,6 +42,8 @@ type DeviceProfile struct {
 	MaxEIRP            int       `db:"max_eirp"`             // In dBm
 	MaxDutyCycle       int       `db:"max_duty_cycle"`       // Example: 10 indicates 10%
 	SupportsJoin       bool      `db:"supports_join"`
+	SaveGWRxOnJoin     bool      `db:"save_gw_rx_on_join"`
+	SyncSecCtxOnJoin   bool      `db:"sync_sec_ctx_on_join"`
 	RFRegion           string    `db:"rf_region"`
 	Supports32bitFCnt  bool      `db:"supports_32bit_fcnt"`
 	ADRAlgorithmID     string    `db:"adr_algorithm_id"`
