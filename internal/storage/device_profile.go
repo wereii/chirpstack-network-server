@@ -87,10 +87,12 @@ func CreateDeviceProfile(ctx context.Context, db sqlx.Execer, dp *DeviceProfile)
             max_eirp,
             max_duty_cycle,
             supports_join,
+			save_gw_rx_on_join,
+			sync_sec_ctx_on_join,
             rf_region,
             supports_32bit_fcnt,
 			adr_algorithm_id
-        ) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23)`,
+        ) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25)`,
 		dp.CreatedAt,
 		dp.UpdatedAt,
 		dp.ID,
@@ -111,6 +113,8 @@ func CreateDeviceProfile(ctx context.Context, db sqlx.Execer, dp *DeviceProfile)
 		dp.MaxEIRP,
 		dp.MaxDutyCycle,
 		dp.SupportsJoin,
+		dp.SaveGWRxOnJoin,
+		dp.SyncSecCtxOnJoin,
 		dp.RFRegion,
 		dp.Supports32bitFCnt,
 		dp.ADRAlgorithmID,
@@ -236,6 +240,8 @@ func GetDeviceProfile(ctx context.Context, db sqlx.Queryer, id uuid.UUID) (Devic
             max_eirp,
             max_duty_cycle,
             supports_join,
+			save_gw_rx_on_join,
+			sync_sec_ctx_on_join,
             rf_region,
             supports_32bit_fcnt,
 			adr_algorithm_id
@@ -267,6 +273,8 @@ func GetDeviceProfile(ctx context.Context, db sqlx.Queryer, id uuid.UUID) (Devic
 		&dp.MaxEIRP,
 		&dp.MaxDutyCycle,
 		&dp.SupportsJoin,
+		&dp.SaveGWRxOnJoin,
+		&dp.SyncSecCtxOnJoin,
 		&dp.RFRegion,
 		&dp.Supports32bitFCnt,
 		&dp.ADRAlgorithmID,
@@ -309,7 +317,9 @@ func UpdateDeviceProfile(ctx context.Context, db sqlx.Execer, dp *DeviceProfile)
             supports_join = $19,
             rf_region = $20,
             supports_32bit_fcnt = $21,
-			adr_algorithm_id = $22
+			adr_algorithm_id = $22,
+			save_gw_rx_on_join = $23,
+			sync_sec_ctx_on_join = $24
         where
             device_profile_id = $1`,
 		dp.ID,
@@ -334,6 +344,8 @@ func UpdateDeviceProfile(ctx context.Context, db sqlx.Execer, dp *DeviceProfile)
 		dp.RFRegion,
 		dp.Supports32bitFCnt,
 		dp.ADRAlgorithmID,
+		dp.SaveGWRxOnJoin,
+		dp.SyncSecCtxOnJoin,
 	)
 	if err != nil {
 		return handlePSQLError(err, "update error")

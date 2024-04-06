@@ -657,18 +657,22 @@ func (ctx *joinContext) setPRStartAnsPayload() error {
 }
 
 func (ctx *joinContext) storeDeviceGatewayRXInfoSet() error {
+	if !ctx.DeviceProfile.SaveGWRxOnJoin {
+		return nil
+	}
+
 	rxInfoSet := storage.DeviceGatewayRXInfoSet{
 		DevEUI: ctx.DeviceSession.DevEUI,
 		DR:     ctx.RXPacket.DR,
 	}
 	log.WithFields(
 		log.Fields{"dev_eui": rxInfoSet.DevEUI, "ctx_id": ctx.ctx.Value(logging.ContextIDKey)}).Info(
-		"experimental: running save rxinfo on join")
+		"experimental: running save RXInfoSet on-join")
 
 	if len(ctx.RXPacket.RXInfoSet) <= 0 {
 		log.WithFields(
 			log.Fields{"dev_eui": rxInfoSet.DevEUI, "ctx_id": ctx.ctx.Value(logging.ContextIDKey)}).Warning(
-			"experimental: not saving empty RXInfoSet")
+			"experimental rx-on-join: not saving empty RXInfoSet")
 		return nil
 	}
 
@@ -683,13 +687,13 @@ func (ctx *joinContext) storeDeviceGatewayRXInfoSet() error {
 		}
 		log.WithFields(
 			log.Fields{"dev_eui": rxInfoSet.DevEUI, "rxItem": rxItem, "ctx_id": ctx.ctx.Value(logging.ContextIDKey)}).Info(
-			"experimental: join rxinfo saved")
+			"experimental: on-join RXInfoSet saved")
 		rxInfoSet.Items = append(rxInfoSet.Items, rxItem)
 	}
 
 	err := storage.SaveDeviceGatewayRXInfoSet(ctx.ctx, rxInfoSet)
 	if err != nil {
-		return errors.Wrap(err, "save device gateway rx-info set error")
+		return errors.Wrap(err, "save device gateway RXInfoSet set error")
 	}
 
 	return nil

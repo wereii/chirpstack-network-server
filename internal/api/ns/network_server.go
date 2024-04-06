@@ -364,8 +364,10 @@ func (n *NetworkServerAPI) CreateDeviceProfile(ctx context.Context, req *ns.Crea
 		MaxEIRP:            int(req.DeviceProfile.MaxEirp),
 		MaxDutyCycle:       int(req.DeviceProfile.MaxDutyCycle),
 		SupportsJoin:       req.DeviceProfile.SupportsJoin,
-		Supports32bitFCnt:  req.DeviceProfile.Supports_32BitFCnt,
+		SaveGWRxOnJoin:     req.DeviceProfile.Save_GW_RXOnJoin,
+		SyncSecCtxOnJoin:   req.DeviceProfile.SyncSecurityContextOnJoin,
 		RFRegion:           band.Band().Name(),
+		Supports32bitFCnt:  req.DeviceProfile.Supports_32BitFCnt,
 		ADRAlgorithmID:     req.DeviceProfile.AdrAlgorithmId,
 	}
 
@@ -395,27 +397,29 @@ func (n *NetworkServerAPI) GetDeviceProfile(ctx context.Context, req *ns.GetDevi
 
 	resp := ns.GetDeviceProfileResponse{
 		DeviceProfile: &ns.DeviceProfile{
-			Id:                 dp.ID.Bytes(),
-			SupportsClassB:     dp.SupportsClassB,
-			ClassBTimeout:      uint32(dp.ClassBTimeout),
-			PingSlotPeriod:     uint32(dp.PingSlotPeriod),
-			PingSlotDr:         uint32(dp.PingSlotDR),
-			PingSlotFreq:       uint32(dp.PingSlotFreq),
-			SupportsClassC:     dp.SupportsClassC,
-			ClassCTimeout:      uint32(dp.ClassCTimeout),
-			MacVersion:         dp.MACVersion,
-			RegParamsRevision:  dp.RegParamsRevision,
-			RxDelay_1:          uint32(dp.RXDelay1),
-			RxDrOffset_1:       uint32(dp.RXDROffset1),
-			RxDatarate_2:       uint32(dp.RXDataRate2),
-			RxFreq_2:           uint32(dp.RXFreq2),
-			FactoryPresetFreqs: factoryPresetFreqs,
-			MaxEirp:            uint32(dp.MaxEIRP),
-			MaxDutyCycle:       uint32(dp.MaxDutyCycle),
-			SupportsJoin:       dp.SupportsJoin,
-			RfRegion:           string(dp.RFRegion),
-			Supports_32BitFCnt: dp.Supports32bitFCnt,
-			AdrAlgorithmId:     dp.ADRAlgorithmID,
+			Id:                        dp.ID.Bytes(),
+			SupportsClassB:            dp.SupportsClassB,
+			ClassBTimeout:             uint32(dp.ClassBTimeout),
+			PingSlotPeriod:            uint32(dp.PingSlotPeriod),
+			PingSlotDr:                uint32(dp.PingSlotDR),
+			PingSlotFreq:              uint32(dp.PingSlotFreq),
+			SupportsClassC:            dp.SupportsClassC,
+			ClassCTimeout:             uint32(dp.ClassCTimeout),
+			MacVersion:                dp.MACVersion,
+			RegParamsRevision:         dp.RegParamsRevision,
+			RxDelay_1:                 uint32(dp.RXDelay1),
+			RxDrOffset_1:              uint32(dp.RXDROffset1),
+			RxDatarate_2:              uint32(dp.RXDataRate2),
+			RxFreq_2:                  uint32(dp.RXFreq2),
+			FactoryPresetFreqs:        factoryPresetFreqs,
+			MaxEirp:                   uint32(dp.MaxEIRP),
+			MaxDutyCycle:              uint32(dp.MaxDutyCycle),
+			SupportsJoin:              dp.SupportsJoin,
+			Save_GW_RXOnJoin:          dp.SaveGWRxOnJoin,
+			SyncSecurityContextOnJoin: dp.SyncSecCtxOnJoin,
+			RfRegion:                  string(dp.RFRegion),
+			Supports_32BitFCnt:        dp.Supports32bitFCnt,
+			AdrAlgorithmId:            dp.ADRAlgorithmID,
 		},
 	}
 
@@ -467,6 +471,8 @@ func (n *NetworkServerAPI) UpdateDeviceProfile(ctx context.Context, req *ns.Upda
 	dp.Supports32bitFCnt = req.DeviceProfile.Supports_32BitFCnt
 	dp.RFRegion = band.Band().Name()
 	dp.ADRAlgorithmID = req.DeviceProfile.AdrAlgorithmId
+	dp.SyncSecCtxOnJoin = req.DeviceProfile.SyncSecurityContextOnJoin
+	dp.SaveGWRxOnJoin = req.DeviceProfile.Save_GW_RXOnJoin
 
 	if err := storage.FlushDeviceProfileCache(ctx, dp.ID); err != nil {
 		return nil, errToRPCError(err)
