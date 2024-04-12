@@ -661,14 +661,14 @@ func (ctx *joinContext) storeDeviceGatewayRXInfoSet() error {
 	if !ctx.DeviceProfile.SaveGWRxOnJoin {
 		return nil
 	}
+	log.WithFields(
+		log.Fields{"dev_eui": ctx.DeviceSession.DevEUI, "ctx_id": ctx.ctx.Value(logging.ContextIDKey)}).Info(
+		"experimental rx-on-join: running save RXInfoSet on-join")
 
 	rxInfoSet := storage.DeviceGatewayRXInfoSet{
 		DevEUI: ctx.DeviceSession.DevEUI,
 		DR:     ctx.RXPacket.DR,
 	}
-	log.WithFields(
-		log.Fields{"dev_eui": rxInfoSet.DevEUI, "ctx_id": ctx.ctx.Value(logging.ContextIDKey)}).Info(
-		"experimental rx-on-join: running save RXInfoSet on-join")
 
 	if len(ctx.RXPacket.RXInfoSet) <= 0 {
 		log.WithFields(
@@ -688,7 +688,7 @@ func (ctx *joinContext) storeDeviceGatewayRXInfoSet() error {
 		}
 		log.WithFields(
 			log.Fields{"dev_eui": rxInfoSet.DevEUI, "rxItem": rxItem, "ctx_id": ctx.ctx.Value(logging.ContextIDKey)}).Info(
-			"experimental rx-on-join: on-join RXInfoSet saved")
+			"experimental rx-on-join: RXInfoSet saved")
 		rxInfoSet.Items = append(rxInfoSet.Items, rxItem)
 	}
 
@@ -704,16 +704,28 @@ func (ctx *joinContext) syncDeviceContextSync() error {
 	if !ctx.DeviceProfile.SyncSecCtxOnJoin {
 		return nil
 	}
+	log.WithFields(
+		log.Fields{"dev_eui": ctx.DeviceSession.DevEUI, "ctx_id": ctx.ctx.Value(logging.ContextIDKey)}).Info(
+		"experimental sync-on-join: running syncDeviceContext on-join")
 
 	appSKey, err := unwrapNSKeyEnvelope(ctx.JoinAnsPayload.AppSKey)
 	if err != nil {
 		return errors.Wrap(err, "failed unwrapping AppSKey")
 	}
 
+	if len(appSKey[:]) == 0 {
+		log.WithFields(log.Fields{"appSKey": ctx.JoinAnsPayload.AppSKey}).Warning("experimental sync-on-join: AppSKey is empty")
+		return nil
+	}
+
 	err = storage.UpdateDeviceActivation(ctx.ctx, ctx.Device.DevEUI, ctx.DevAddr, appSKey)
 	if err != nil {
 		return err
 	}
+
+	log.WithFields(
+		log.Fields{"dev_eui": ctx.DeviceSession.DevEUI, "ctx_id": ctx.ctx.Value(logging.ContextIDKey)}).Info(
+		"experimental sync-on-join: saved DeviceActivation")
 
 	return nil
 }
