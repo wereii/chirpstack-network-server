@@ -4,13 +4,13 @@ import (
 	"context"
 	"time"
 
-	"github.com/brocaar/chirpstack-api/go/v3/as"
 	"github.com/brocaar/chirpstack-network-server/v3/internal/backend/applicationserver"
 	"github.com/brocaar/chirpstack-network-server/v3/internal/logging"
 	"github.com/gofrs/uuid"
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
+	"github.com/wereii/chirpstack-api/go/v3/as"
 )
 
 // RoutingProfile defines the backend.RoutingProfile with some extra meta-data.

@@ -7,7 +7,7 @@
 package storage
 
 import (
-	common "github.com/brocaar/chirpstack-api/go/v3/common"
+	common "github.com/wereii/chirpstack-api/go/v3/common"
 	proto "github.com/golang/protobuf/proto"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"

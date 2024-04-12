@@ -9,9 +9,6 @@ import (
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
 
-	"github.com/brocaar/chirpstack-api/go/v3/as"
-	"github.com/brocaar/chirpstack-api/go/v3/common"
-	"github.com/brocaar/chirpstack-api/go/v3/nc"
 	"github.com/brocaar/chirpstack-network-server/v3/internal/backend/applicationserver"
 	"github.com/brocaar/chirpstack-network-server/v3/internal/backend/controller"
 	"github.com/brocaar/chirpstack-network-server/v3/internal/band"
@@ -25,6 +22,9 @@ import (
 	"github.com/brocaar/chirpstack-network-server/v3/internal/roaming"
 	"github.com/brocaar/chirpstack-network-server/v3/internal/storage"
 	"github.com/brocaar/lorawan"
+	"github.com/wereii/chirpstack-api/go/v3/as"
+	"github.com/wereii/chirpstack-api/go/v3/common"
+	"github.com/wereii/chirpstack-api/go/v3/nc"
 )
 
 const (

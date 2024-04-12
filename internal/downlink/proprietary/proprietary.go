@@ -7,8 +7,8 @@ import (
 	"github.com/gofrs/uuid"
 	"github.com/pkg/errors"
 
-	"github.com/brocaar/chirpstack-api/go/v3/common"
-	"github.com/brocaar/chirpstack-api/go/v3/gw"
+	"github.com/wereii/chirpstack-api/go/v3/common"
+	"github.com/wereii/chirpstack-api/go/v3/gw"
 	"github.com/brocaar/chirpstack-network-server/v3/internal/backend/gateway"
 	"github.com/brocaar/chirpstack-network-server/v3/internal/band"
 	"github.com/brocaar/chirpstack-network-server/v3/internal/config"

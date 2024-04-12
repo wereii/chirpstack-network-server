@@ -13,8 +13,6 @@ import (
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
 
-	"github.com/brocaar/chirpstack-api/go/v3/as"
-	"github.com/brocaar/chirpstack-api/go/v3/nc"
 	"github.com/brocaar/chirpstack-network-server/v3/internal/backend/controller"
 	"github.com/brocaar/chirpstack-network-server/v3/internal/backend/joinserver"
 	"github.com/brocaar/chirpstack-network-server/v3/internal/band"
@@ -29,6 +27,8 @@ import (
 	"github.com/brocaar/lorawan"
 	"github.com/brocaar/lorawan/backend"
 	loraband "github.com/brocaar/lorawan/band"
+	"github.com/wereii/chirpstack-api/go/v3/as"
+	"github.com/wereii/chirpstack-api/go/v3/nc"
 )
 
 // ErrAbort is used to abort the flow without error
@@ -106,8 +106,9 @@ func Handle(ctx context.Context, rxPacket models.RXPacket) error {
 			jctx.createDeviceSession,
 			jctx.createDeviceActivation,
 			jctx.setDeviceMode,
-			jctx.storeDeviceGatewayRXInfoSet,
 			jctx.sendJoinAcceptDownlink,
+			jctx.storeDeviceGatewayRXInfoSet,
+			jctx.syncDeviceContextSync,
 		} {
 			if err := f(); err != nil {
 				if err == ErrAbort {
@@ -667,7 +668,7 @@ func (ctx *joinContext) storeDeviceGatewayRXInfoSet() error {
 	}
 	log.WithFields(
 		log.Fields{"dev_eui": rxInfoSet.DevEUI, "ctx_id": ctx.ctx.Value(logging.ContextIDKey)}).Info(
-		"experimental: running save RXInfoSet on-join")
+		"experimental rx-on-join: running save RXInfoSet on-join")
 
 	if len(ctx.RXPacket.RXInfoSet) <= 0 {
 		log.WithFields(
@@ -687,13 +688,31 @@ func (ctx *joinContext) storeDeviceGatewayRXInfoSet() error {
 		}
 		log.WithFields(
 			log.Fields{"dev_eui": rxInfoSet.DevEUI, "rxItem": rxItem, "ctx_id": ctx.ctx.Value(logging.ContextIDKey)}).Info(
-			"experimental: on-join RXInfoSet saved")
+			"experimental rx-on-join: on-join RXInfoSet saved")
 		rxInfoSet.Items = append(rxInfoSet.Items, rxItem)
 	}
 
 	err := storage.SaveDeviceGatewayRXInfoSet(ctx.ctx, rxInfoSet)
 	if err != nil {
 		return errors.Wrap(err, "save device gateway RXInfoSet set error")
+	}
+
+	return nil
+}
+
+func (ctx *joinContext) syncDeviceContextSync() error {
+	if !ctx.DeviceProfile.SyncSecCtxOnJoin {
+		return nil
+	}
+
+	appSKey, err := unwrapNSKeyEnvelope(ctx.JoinAnsPayload.AppSKey)
+	if err != nil {
+		return errors.Wrap(err, "failed unwrapping AppSKey")
+	}
+
+	err = storage.UpdateDeviceActivation(ctx.ctx, ctx.Device.DevEUI, ctx.DevAddr, appSKey)
+	if err != nil {
+		return err
 	}
 
 	return nil

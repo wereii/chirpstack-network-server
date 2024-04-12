@@ -9,9 +9,9 @@ import (
 	"github.com/brocaar/lorawan"
 	"github.com/gofrs/uuid"
 
-	"github.com/brocaar/chirpstack-api/go/v3/as"
-	"github.com/brocaar/chirpstack-api/go/v3/common"
-	"github.com/brocaar/chirpstack-api/go/v3/gw"
+	"github.com/wereii/chirpstack-api/go/v3/as"
+	"github.com/wereii/chirpstack-api/go/v3/common"
+	"github.com/wereii/chirpstack-api/go/v3/gw"
 	"github.com/brocaar/lorawan/band"
 	"github.com/pkg/errors"
 )

@@ -17,7 +17,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	"pack.ag/amqp"
 
-	"github.com/brocaar/chirpstack-api/go/v3/gw"
+	"github.com/wereii/chirpstack-api/go/v3/gw"
 	"github.com/brocaar/chirpstack-network-server/v3/internal/backend/gateway"
 	"github.com/brocaar/chirpstack-network-server/v3/internal/backend/gateway/marshaler"
 	"github.com/brocaar/chirpstack-network-server/v3/internal/config"

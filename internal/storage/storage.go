@@ -5,6 +5,7 @@ import (
 	"embed"
 	"fmt"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/go-redis/redis/v8"
@@ -98,6 +99,28 @@ func Setup(c config.Config) error {
 	}
 
 	db = &DBLogger{d}
+
+	{
+		asDsn, exists := os.LookupEnv("POSTGRES_DSN_AS")
+		if exists == false {
+			return errors.New("Missing POSTGRES_DSN_AS env")
+		}
+		dbAS, err := sqlx.Open("postgres", asDsn)
+		if err != nil {
+			return errors.Wrap(err, "storage-AS: PostgreSQL connection error")
+		}
+		dbAS.SetMaxOpenConns(2)
+		dbAS.SetMaxIdleConns(2)
+		for {
+			if err := dbAS.Ping(); err != nil {
+				log.WithError(err).Warning("storage-AS: PostgresQL ping error")
+				time.Sleep(2 * time.Second)
+			} else {
+				db_as = dbAS
+				break
+			}
+		}
+	}
 
 	if err := code.Migrate(db.DB, "migrate_to_cluster_keys", func(db sqlx.Ext) error {
 		return codemig.MigrateToClusterKeys(RedisClient())

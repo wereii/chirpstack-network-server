@@ -13,8 +13,6 @@ import (
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
 
-	"github.com/brocaar/chirpstack-api/go/v3/as"
-	"github.com/brocaar/chirpstack-api/go/v3/gw"
 	adrr "github.com/brocaar/chirpstack-network-server/v3/adr"
 	"github.com/brocaar/chirpstack-network-server/v3/internal/adr"
 	"github.com/brocaar/chirpstack-network-server/v3/internal/backend/applicationserver"
@@ -35,6 +33,8 @@ import (
 	"github.com/brocaar/lorawan/backend"
 	loraband "github.com/brocaar/lorawan/band"
 	"github.com/brocaar/lorawan/sensitivity"
+	"github.com/wereii/chirpstack-api/go/v3/as"
+	"github.com/wereii/chirpstack-api/go/v3/gw"
 )
 
 const (

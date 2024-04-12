@@ -12,9 +12,9 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 
-	"github.com/brocaar/chirpstack-api/go/v3/common"
-	"github.com/brocaar/chirpstack-api/go/v3/gw"
-	"github.com/brocaar/chirpstack-api/go/v3/ns"
+	"github.com/wereii/chirpstack-api/go/v3/common"
+	"github.com/wereii/chirpstack-api/go/v3/gw"
+	"github.com/wereii/chirpstack-api/go/v3/ns"
 	"github.com/brocaar/chirpstack-network-server/v3/internal/config"
 	"github.com/brocaar/chirpstack-network-server/v3/internal/framelog"
 	"github.com/brocaar/chirpstack-network-server/v3/internal/gps"

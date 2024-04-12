@@ -16,9 +16,6 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
 
-	"github.com/brocaar/chirpstack-api/go/v3/as"
-	"github.com/brocaar/chirpstack-api/go/v3/common"
-	"github.com/brocaar/chirpstack-api/go/v3/gw"
 	roamingapi "github.com/brocaar/chirpstack-network-server/v3/internal/api/roaming"
 	"github.com/brocaar/chirpstack-network-server/v3/internal/backend/joinserver"
 	"github.com/brocaar/chirpstack-network-server/v3/internal/band"
@@ -30,6 +27,9 @@ import (
 	"github.com/brocaar/chirpstack-network-server/v3/internal/uplink"
 	"github.com/brocaar/lorawan"
 	"github.com/brocaar/lorawan/backend"
+	"github.com/wereii/chirpstack-api/go/v3/as"
+	"github.com/wereii/chirpstack-api/go/v3/common"
+	"github.com/wereii/chirpstack-api/go/v3/gw"
 )
 
 // PassiveRoamingFNSTestSuite contains the tests from the fNS POV.

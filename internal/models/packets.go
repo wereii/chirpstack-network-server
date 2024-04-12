@@ -1,7 +1,7 @@
 package models
 
 import (
-	"github.com/brocaar/chirpstack-api/go/v3/gw"
+	"github.com/wereii/chirpstack-api/go/v3/gw"
 	"github.com/brocaar/lorawan"
 	"github.com/brocaar/lorawan/backend"
 	"github.com/gofrs/uuid"

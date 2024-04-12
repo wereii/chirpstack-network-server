@@ -1,6 +1,6 @@
 .PHONY: build clean test package serve update-vendor api
 VERSION := $(shell git describe --always |sed -e "s/^v//")
-API_VERSION := $(shell go list -m -f '{{ .Version }}' github.com/brocaar/chirpstack-api/go/v3 | awk '{n=split($$0, a, "-"); print a[n]}')
+API_VERSION := v3.99.1
 
 build:
 	@echo "Compiling source"
@@ -34,7 +34,7 @@ snapshot:
 api:
 	@echo "Fetching Protobuf API files"
 	@rm -rf /tmp/chirpstack-api
-	@git clone https://github.com/brocaar/chirpstack-api.git /tmp/chirpstack-api
+	@git clone https://github.com/wereii/chirpstack-api.git /tmp/chirpstack-api
 	@git --git-dir=/tmp/chirpstack-api/.git --work-tree=/tmp/chirpstack-api checkout go/$(API_VERSION)
 
 	@echo "Generating API code from .proto files"

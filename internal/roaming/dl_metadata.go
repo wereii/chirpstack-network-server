@@ -4,7 +4,7 @@ import (
 	"github.com/golang/protobuf/proto"
 	"github.com/pkg/errors"
 
-	"github.com/brocaar/chirpstack-api/go/v3/gw"
+	"github.com/wereii/chirpstack-api/go/v3/gw"
 	"github.com/brocaar/lorawan/backend"
 )
 

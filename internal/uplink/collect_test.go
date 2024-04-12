@@ -10,9 +10,6 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
 
-	"github.com/brocaar/chirpstack-api/go/v3/common"
-	"github.com/brocaar/chirpstack-api/go/v3/gw"
-	"github.com/brocaar/chirpstack-api/go/v3/nc"
 	"github.com/brocaar/chirpstack-network-server/v3/internal/backend/controller"
 	"github.com/brocaar/chirpstack-network-server/v3/internal/band"
 	"github.com/brocaar/chirpstack-network-server/v3/internal/helpers"
@@ -20,6 +17,9 @@ import (
 	"github.com/brocaar/chirpstack-network-server/v3/internal/storage"
 	"github.com/brocaar/chirpstack-network-server/v3/internal/test"
 	"github.com/brocaar/lorawan"
+	"github.com/wereii/chirpstack-api/go/v3/common"
+	"github.com/wereii/chirpstack-api/go/v3/gw"
+	"github.com/wereii/chirpstack-api/go/v3/nc"
 )
 
 type CollectTestSuite struct {

@@ -42,8 +42,8 @@ type DeviceProfile struct {
 	MaxEIRP            int       `db:"max_eirp"`             // In dBm
 	MaxDutyCycle       int       `db:"max_duty_cycle"`       // Example: 10 indicates 10%
 	SupportsJoin       bool      `db:"supports_join"`
-	SaveGWRxOnJoin     bool      `db:"save_gw_rx_on_join"`
-	SyncSecCtxOnJoin   bool      `db:"sync_sec_ctx_on_join"`
+	SaveGWRxOnJoin     bool      `db:"save_gw_rx_on_join_req"`
+	SyncSecCtxOnJoin   bool      `db:"sync_sec_ctx_on_join_req"`
 	RFRegion           string    `db:"rf_region"`
 	Supports32bitFCnt  bool      `db:"supports_32bit_fcnt"`
 	ADRAlgorithmID     string    `db:"adr_algorithm_id"`
@@ -87,8 +87,8 @@ func CreateDeviceProfile(ctx context.Context, db sqlx.Execer, dp *DeviceProfile)
             max_eirp,
             max_duty_cycle,
             supports_join,
-			save_gw_rx_on_join,
-			sync_sec_ctx_on_join,
+			save_gw_rx_on_join_req,
+			sync_sec_ctx_on_join_req,
             rf_region,
             supports_32bit_fcnt,
 			adr_algorithm_id
@@ -240,8 +240,8 @@ func GetDeviceProfile(ctx context.Context, db sqlx.Queryer, id uuid.UUID) (Devic
             max_eirp,
             max_duty_cycle,
             supports_join,
-			save_gw_rx_on_join,
-			sync_sec_ctx_on_join,
+			save_gw_rx_on_join_req,
+			sync_sec_ctx_on_join_req,
             rf_region,
             supports_32bit_fcnt,
 			adr_algorithm_id
@@ -318,8 +318,8 @@ func UpdateDeviceProfile(ctx context.Context, db sqlx.Execer, dp *DeviceProfile)
             rf_region = $20,
             supports_32bit_fcnt = $21,
 			adr_algorithm_id = $22,
-			save_gw_rx_on_join = $23,
-			sync_sec_ctx_on_join = $24
+			save_gw_rx_on_join_req = $23,
+			sync_sec_ctx_on_join_req = $24
         where
             device_profile_id = $1`,
 		dp.ID,

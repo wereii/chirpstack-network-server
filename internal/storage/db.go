@@ -18,6 +18,8 @@ var redisClient redis.UniversalClient
 // db holds the PostgreSQL connection pool.
 var db *DBLogger
 
+var db_as *sqlx.DB = nil
+
 // DBLogger is a DB wrapper which logs the executed sql queries and their
 // duration.
 type DBLogger struct {
@@ -110,6 +112,10 @@ func logQuery(query string, duration time.Duration, args ...interface{}) {
 // DB returns the PostgreSQL database object.
 func DB() *DBLogger {
 	return db
+}
+
+func DbAs() *sqlx.DB {
+	return db_as
 }
 
 // RedisClient returns the Redis client.

@@ -15,11 +15,11 @@ import (
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
 
-	"github.com/brocaar/chirpstack-api/go/v3/common"
 	"github.com/brocaar/chirpstack-network-server/v3/internal/band"
 	"github.com/brocaar/chirpstack-network-server/v3/internal/logging"
 	"github.com/brocaar/lorawan"
 	loraband "github.com/brocaar/lorawan/band"
+	"github.com/wereii/chirpstack-api/go/v3/common"
 )
 
 const (
@@ -930,4 +930,40 @@ func deviceGatewayRXInfoSetFromPB(d *DeviceGatewayRXInfoSetPB) DeviceGatewayRXIn
 	}
 
 	return out
+}
+
+func UpdateDeviceActivation(ctx context.Context, devEUI lorawan.EUI64, devAddr lorawan.DevAddr, appSKey lorawan.AES128Key) error {
+	if db_as == nil {
+		return errors.New("AS DB Connection is nil -")
+	}
+
+	res, err := db_as.Exec(`
+		update device
+		set
+			dev_addr = $2,
+			app_s_key = $3
+		where
+			dev_eui = $1`,
+		devEUI[:],
+		devAddr[:],
+		appSKey[:],
+	)
+	if err != nil {
+		return handlePSQLError(err, "update last-seen and dr error")
+	}
+	ra, err := res.RowsAffected()
+	if err != nil {
+		return errors.Wrap(err, "get rows affected error")
+	}
+	if ra == 0 {
+		return ErrDoesNotExist
+	}
+
+	log.WithFields(log.Fields{
+		"dev_eui":  devEUI,
+		"dev_addr": devAddr,
+		"ctx_id":   ctx.Value(logging.ContextIDKey),
+	}).Info("device activation updated")
+
+	return nil
 }

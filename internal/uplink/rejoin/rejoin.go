@@ -11,7 +11,7 @@ import (
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
 
-	"github.com/brocaar/chirpstack-api/go/v3/nc"
+	"github.com/wereii/chirpstack-api/go/v3/nc"
 	"github.com/brocaar/chirpstack-network-server/v3/internal/backend/controller"
 	"github.com/brocaar/chirpstack-network-server/v3/internal/backend/joinserver"
 	"github.com/brocaar/chirpstack-network-server/v3/internal/band"
