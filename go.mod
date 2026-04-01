@@ -1,6 +1,6 @@
 module github.com/brocaar/chirpstack-network-server/v3
 
-go 1.17
+go 1.24.0
 
 require (
 	cloud.google.com/go/pubsub v1.3.1
@@ -12,7 +12,7 @@ require (
 	github.com/go-redis/redis/v8 v8.8.3
 	github.com/gofrs/uuid v3.2.0+incompatible
 	github.com/golang-migrate/migrate/v4 v4.14.1
-	github.com/golang/protobuf v1.5.2
+	github.com/golang/protobuf v1.5.4
 	github.com/goreleaser/goreleaser v0.106.0
 	github.com/goreleaser/nfpm v0.11.0
 	github.com/grpc-ecosystem/go-grpc-middleware v1.0.0
@@ -28,15 +28,15 @@ require (
 	github.com/spf13/cobra v0.0.5
 	github.com/spf13/viper v1.4.0
 	github.com/streadway/amqp v0.0.0-20190827072141-edfb9018d271
-	github.com/stretchr/testify v1.7.0
+	github.com/stretchr/testify v1.11.1
 	github.com/wereii/chirpstack-api/go/v3 v3.99.1
 	golang.org/x/lint v0.0.0-20200302205851-738671d3881b
-	golang.org/x/net v0.8.0
-	golang.org/x/tools v0.6.0
-	gonum.org/v1/gonum v0.0.0-20190115205657-1b07048b32c6
+	golang.org/x/net v0.48.0
+	golang.org/x/tools v0.39.0
+	gonum.org/v1/gonum v0.16.0
 	google.golang.org/api v0.30.0
-	google.golang.org/grpc v1.33.1
-	google.golang.org/protobuf v1.28.1
+	google.golang.org/grpc v1.79.3
+	google.golang.org/protobuf v1.36.10
 	pack.ag/amqp v0.12.1
 )
 
@@ -55,16 +55,17 @@ require (
 	github.com/caarlos0/ctrlc v1.0.0 // indirect
 	github.com/campoy/unique v0.0.0-20180121183637-88950e537e7e // indirect
 	github.com/census-instrumentation/opencensus-proto v0.2.1 // indirect
-	github.com/cespare/xxhash/v2 v2.1.2 // indirect
+	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/devigned/tab v0.1.1 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/fatih/color v1.7.0 // indirect
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
+	github.com/go-logr/logr v1.4.3 // indirect
+	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
-	github.com/google/go-cmp v0.5.8 // indirect
 	github.com/google/go-github v17.0.0+incompatible // indirect
 	github.com/google/go-querystring v1.0.0 // indirect
 	github.com/googleapis/gax-go/v2 v2.0.5 // indirect
@@ -102,19 +103,19 @@ require (
 	github.com/spf13/jwalterweatherman v1.0.0 // indirect
 	github.com/spf13/pflag v1.0.3 // indirect
 	go.opencensus.io v0.22.4 // indirect
-	go.opentelemetry.io/otel v0.20.0 // indirect
-	go.opentelemetry.io/otel/metric v0.20.0 // indirect
-	go.opentelemetry.io/otel/trace v0.20.0 // indirect
-	golang.org/x/exp v0.0.0-20200224162631-6cc2880d07d6 // indirect
-	golang.org/x/mod v0.8.0 // indirect
-	golang.org/x/oauth2 v0.0.0-20220223155221-ee480838109b // indirect
-	golang.org/x/sync v0.1.0 // indirect
-	golang.org/x/sys v0.6.0 // indirect
-	golang.org/x/text v0.8.0 // indirect
-	gonum.org/v1/netlib v0.0.0-20190219113230-9992c5f5eae4 // indirect
+	go.opentelemetry.io/auto/sdk v1.2.1 // indirect
+	go.opentelemetry.io/otel v1.39.0 // indirect
+	go.opentelemetry.io/otel/metric v1.39.0 // indirect
+	go.opentelemetry.io/otel/trace v1.39.0 // indirect
+	golang.org/x/mod v0.30.0 // indirect
+	golang.org/x/oauth2 v0.34.0 // indirect
+	golang.org/x/sync v0.19.0 // indirect
+	golang.org/x/sys v0.39.0 // indirect
+	golang.org/x/telemetry v0.0.0-20251111182119-bc8e575c7b54 // indirect
+	golang.org/x/text v0.32.0 // indirect
 	google.golang.org/appengine v1.6.6 // indirect
 	google.golang.org/genproto v0.0.0-20201030142918-24207fddd1c3 // indirect
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
-	gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
