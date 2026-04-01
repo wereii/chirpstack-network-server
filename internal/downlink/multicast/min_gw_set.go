@@ -166,6 +166,15 @@ func (e deviceGatewayEdge) To() graph.Node {
 	return simple.Node(eui64Int64(e.gatewayID))
 }
 
+// ReversedEdge implements graph.WeightedEdge.
+func (e deviceGatewayEdge) ReversedEdge() graph.Edge {
+	return deviceGatewayEdge{
+		gatewayID: e.devEUI,
+		devEUI:    e.gatewayID,
+		graph:     e.graph,
+	}
+}
+
 // Weight implements graph.WeightedEdge.
 // The returned weight is equal to 1 / number of devices covered by the
 // gateway.

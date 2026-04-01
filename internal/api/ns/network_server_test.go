@@ -11,6 +11,7 @@ import (
 	. "github.com/smartystreets/goconvey/convey"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/credentials/insecure"
 
 	"github.com/wereii/chirpstack-api/go/v3/common"
 	"github.com/wereii/chirpstack-api/go/v3/gw"
@@ -50,7 +51,7 @@ func TestNetworkServerAPI(t *testing.T) {
 			ln.Close()
 		}()
 
-		apiClient, err := grpc.Dial(ln.Addr().String(), grpc.WithInsecure(), grpc.WithBlock())
+		apiClient, err := grpc.Dial(ln.Addr().String(), grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithBlock())
 		So(err, ShouldBeNil)
 
 		defer apiClient.Close()

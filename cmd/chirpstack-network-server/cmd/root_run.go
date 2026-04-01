@@ -16,6 +16,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/balancer/roundrobin"
 	"google.golang.org/grpc/credentials"
+	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/resolver"
 
 	"github.com/wereii/chirpstack-api/go/v3/nc"
@@ -259,14 +260,14 @@ func setupNetworkController() error {
 			"tls-key":  config.C.NetworkController.TLSKey,
 		}).Info("connecting to network-controller")
 		ncDialOptions := []grpc.DialOption{
-			grpc.WithBalancerName(roundrobin.Name),
+			grpc.WithDefaultServiceConfig(fmt.Sprintf(`{"loadBalancingConfig": [{"%s":{}}]}`, roundrobin.Name)),
 		}
 		if config.C.NetworkController.TLSCert != "" && config.C.NetworkController.TLSKey != "" {
 			ncDialOptions = append(ncDialOptions, grpc.WithTransportCredentials(
 				mustGetTransportCredentials(config.C.NetworkController.TLSCert, config.C.NetworkController.TLSKey, config.C.NetworkController.CACert, false),
 			))
 		} else {
-			ncDialOptions = append(ncDialOptions, grpc.WithInsecure())
+			ncDialOptions = append(ncDialOptions, grpc.WithTransportCredentials(insecure.NewCredentials()))
 		}
 		ncConn, err := grpc.Dial(config.C.NetworkController.Server, ncDialOptions...)
 		if err != nil {

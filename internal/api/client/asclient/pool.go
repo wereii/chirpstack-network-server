@@ -5,6 +5,7 @@ import (
 	"context"
 	"crypto/tls"
 	"crypto/x509"
+	"fmt"
 	"sync"
 	"time"
 
@@ -14,6 +15,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/balancer/roundrobin"
 	"google.golang.org/grpc/credentials"
+	"google.golang.org/grpc/credentials/insecure"
 
 	"github.com/brocaar/chirpstack-network-server/v3/internal/logging"
 	"github.com/wereii/chirpstack-api/go/v3/as"
@@ -95,11 +97,11 @@ func (p *pool) createClient(hostname string, caCert, tlsCert, tlsKey []byte) (*g
 		grpc.WithStreamInterceptor(
 			grpc_logrus.StreamClientInterceptor(logrusEntry, logrusOpts...),
 		),
-		grpc.WithBalancerName(roundrobin.Name),
+		grpc.WithDefaultServiceConfig(fmt.Sprintf(`{"loadBalancingConfig": [{"%s":{}}]}`, roundrobin.Name)),
 	}
 
 	if len(tlsCert) == 0 && len(tlsKey) == 0 && len(caCert) == 0 {
-		asOpts = append(asOpts, grpc.WithInsecure())
+		asOpts = append(asOpts, grpc.WithTransportCredentials(insecure.NewCredentials()))
 		log.WithField("server", hostname).Warning("creating insecure application-server client")
 	} else {
 		log.WithField("server", hostname).Info("creating application-server client")

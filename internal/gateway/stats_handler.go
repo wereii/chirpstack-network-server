@@ -20,8 +20,8 @@ type StatsHandler struct {
 
 // Start starts the stats handler.
 func (s *StatsHandler) Start() error {
+	s.wg.Add(1)
 	go func() {
-		s.wg.Add(1)
 		defer s.wg.Done()
 
 		if gateway.Backend() == nil {
@@ -29,8 +29,8 @@ func (s *StatsHandler) Start() error {
 		}
 
 		for gwStats := range gateway.Backend().StatsPacketChan() {
+			s.wg.Add(1)
 			go func(gwStats gw.GatewayStats) {
-				s.wg.Add(1)
 				defer s.wg.Done()
 
 				var statsID uuid.UUID

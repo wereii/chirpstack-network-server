@@ -779,7 +779,7 @@ func (n *NetworkServerAPI) CreateMACCommandQueueItem(ctx context.Context, req *n
 	for _, b := range req.Commands {
 		var mac lorawan.MACCommand
 		if err := mac.UnmarshalBinary(false, b); err != nil {
-			return nil, grpc.Errorf(codes.InvalidArgument, err.Error())
+			return nil, grpc.Errorf(codes.InvalidArgument, "%s", err.Error())
 		}
 		commands = append(commands, mac)
 	}
@@ -1077,12 +1077,12 @@ func (n *NetworkServerAPI) GetGatewayStats(ctx context.Context, req *ns.GetGatew
 
 	start, err := ptypes.Timestamp(req.StartTimestamp)
 	if err != nil {
-		return nil, grpc.Errorf(codes.InvalidArgument, err.Error())
+		return nil, grpc.Errorf(codes.InvalidArgument, "%s", err.Error())
 	}
 
 	end, err := ptypes.Timestamp(req.EndTimestamp)
 	if err != nil {
-		return nil, grpc.Errorf(codes.InvalidArgument, err.Error())
+		return nil, grpc.Errorf(codes.InvalidArgument, "%s", err.Error())
 	}
 
 	metrics, err := storage.GetMetrics(ctx, storage.AggregationInterval(req.Interval.String()), "gw:"+gatewayID.String(), start, end)

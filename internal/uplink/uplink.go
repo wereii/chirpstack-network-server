@@ -67,14 +67,14 @@ func NewServer() *Server {
 
 // Start starts the server.
 func (s *Server) Start() error {
+	s.wg.Add(1)
 	go func() {
-		s.wg.Add(1)
 		defer s.wg.Done()
 		HandleUplinkFrames(&s.wg)
 	}()
 
+	s.wg.Add(1)
 	go func() {
-		s.wg.Add(1)
 		defer s.wg.Done()
 		HandleDownlinkTXAcks(&s.wg)
 	}()
@@ -96,8 +96,8 @@ func (s *Server) Stop() error {
 // in a separate go-routine. Errors are logged.
 func HandleUplinkFrames(wg *sync.WaitGroup) {
 	for uplinkFrame := range gwbackend.Backend().RXPacketChan() {
+		wg.Add(1)
 		go func(uplinkFrame gw.UplinkFrame) {
-			wg.Add(1)
 			defer wg.Done()
 
 			// The ctxID will be available as context value "ctx_id" so that
@@ -129,8 +129,8 @@ func HandleUplinkFrame(ctx context.Context, uplinkFrame gw.UplinkFrame) error {
 // the gateway.
 func HandleDownlinkTXAcks(wg *sync.WaitGroup) {
 	for downlinkTXAck := range gwbackend.Backend().DownlinkTXAckChan() {
+		wg.Add(1)
 		go func(downlinkTXAck gw.DownlinkTXAck) {
-			wg.Add(1)
 			defer wg.Done()
 
 			// The ctxID will be available as context value "ctx_id" so that

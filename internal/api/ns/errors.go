@@ -35,5 +35,5 @@ func errToRPCError(err error) error {
 	if !ok {
 		code = codes.Unknown
 	}
-	return grpc.Errorf(code, cause.Error())
+	return grpc.Errorf(code, "%s", cause.Error())
 }
