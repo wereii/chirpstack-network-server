@@ -15,7 +15,6 @@ clean:
 test:
 	@echo "Running tests"
 	@rm -f coverage.out
-	@golint ./...
 	@go vet ./...
 	@go test -p 1 -v -cover ./... -coverprofile coverage.out
 
@@ -42,7 +41,6 @@ api:
 	go generate internal/storage/downlink_frame.go
 
 dev-requirements:
-	go install golang.org/x/lint/golint
 	go install golang.org/x/tools/cmd/stringer
 	go install github.com/golang/protobuf/protoc-gen-go
 	go install github.com/goreleaser/goreleaser
