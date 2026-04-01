@@ -36,7 +36,7 @@ require (
 	gonum.org/v1/gonum v0.0.0-20190115205657-1b07048b32c6
 	google.golang.org/api v0.30.0
 	google.golang.org/grpc v1.33.1
-	google.golang.org/protobuf v1.28.1
+	google.golang.org/protobuf v1.33.0
 	pack.ag/amqp v0.12.1
 )
 
