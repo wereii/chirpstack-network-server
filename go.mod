@@ -1,6 +1,6 @@
 module github.com/brocaar/chirpstack-network-server/v3
 
-go 1.17
+go 1.23.0
 
 require (
 	cloud.google.com/go/pubsub v1.3.1
@@ -31,8 +31,8 @@ require (
 	github.com/stretchr/testify v1.7.0
 	github.com/wereii/chirpstack-api/go/v3 v3.99.1
 	golang.org/x/lint v0.0.0-20200302205851-738671d3881b
-	golang.org/x/net v0.8.0
-	golang.org/x/tools v0.6.0
+	golang.org/x/net v0.38.0
+	golang.org/x/tools v0.21.1-0.20240508182429-e35e4ccd0d2d
 	gonum.org/v1/gonum v0.0.0-20190115205657-1b07048b32c6
 	google.golang.org/api v0.30.0
 	google.golang.org/grpc v1.33.1
@@ -64,7 +64,7 @@ require (
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
-	github.com/google/go-cmp v0.5.8 // indirect
+	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/google/go-github v17.0.0+incompatible // indirect
 	github.com/google/go-querystring v1.0.0 // indirect
 	github.com/googleapis/gax-go/v2 v2.0.5 // indirect
@@ -106,11 +106,11 @@ require (
 	go.opentelemetry.io/otel/metric v0.20.0 // indirect
 	go.opentelemetry.io/otel/trace v0.20.0 // indirect
 	golang.org/x/exp v0.0.0-20200224162631-6cc2880d07d6 // indirect
-	golang.org/x/mod v0.8.0 // indirect
+	golang.org/x/mod v0.17.0 // indirect
 	golang.org/x/oauth2 v0.0.0-20220223155221-ee480838109b // indirect
-	golang.org/x/sync v0.1.0 // indirect
-	golang.org/x/sys v0.6.0 // indirect
-	golang.org/x/text v0.8.0 // indirect
+	golang.org/x/sync v0.12.0 // indirect
+	golang.org/x/sys v0.31.0 // indirect
+	golang.org/x/text v0.23.0 // indirect
 	gonum.org/v1/netlib v0.0.0-20190219113230-9992c5f5eae4 // indirect
 	google.golang.org/appengine v1.6.6 // indirect
 	google.golang.org/genproto v0.0.0-20201030142918-24207fddd1c3 // indirect
