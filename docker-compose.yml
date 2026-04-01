@@ -17,6 +17,7 @@ services:
       - GW_MQTT_SERVER=tcp://mosquitto:1883
       - GW_SERVER_JWT_SECRET=verysecret
       - POSTGRES_DSN=postgres://chirpstack_ns:chirpstack_ns@postgres/chirpstack_ns?sslmode=disable
+      - POSTGRES_DSN_AS=postgres://chirpstack_ns:chirpstack_ns@postgres/chirpstack_ns?sslmode=disable
       - TEST_POSTGRES_DSN=postgres://chirpstack_ns:chirpstack_ns@postgres/chirpstack_ns?sslmode=disable
       - TEST_REDIS_SERVERS=redis:6379
       - TEST_MQTT_SERVER=tcp://mosquitto:1883
