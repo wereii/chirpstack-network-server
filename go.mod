@@ -23,7 +23,7 @@ require (
 	github.com/mitchellh/mapstructure v1.1.2
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.14.0
-	github.com/sirupsen/logrus v1.7.0
+	github.com/sirupsen/logrus v1.8.3
 	github.com/smartystreets/goconvey v0.0.0-20190330032615-68dc04aab96a
 	github.com/spf13/cobra v0.0.5
 	github.com/spf13/viper v1.4.0
